@@ -25,12 +25,18 @@ class DashboardPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('dashboard')
-            ->path('dashboard')
+            ->id('admin')
+            ->path('admin')
             ->login()
+            ->brandName('SoloStream CRM')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
+                'danger' => Color::Rose,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
+            ->font('Inter')
+            ->favicon('favicon.ico')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -39,8 +45,10 @@ class DashboardPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                
             ])
+            ->sidebarCollapsibleOnDesktop()
+            ->darkMode(true)
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
