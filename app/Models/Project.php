@@ -4,16 +4,17 @@ namespace App\Models;
 
 use App\Enums\ProjectPriority;
 use App\Enums\ProjectStatus;
+use App\Models\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
     /** @use HasFactory<\Database\Factories\ProjectFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
 
     protected $fillable = [
         'client_id',
@@ -28,7 +29,7 @@ class Project extends Model
 
     /**
      * ✅ Šeit notiek "maģija" — Casts.
-     * Mēs pasakām Laravel, ka 'status' un 'priority' nav vienkārši teksti, 
+     * Mēs pasakām Laravel, ka 'status' un 'priority' nav vienkārši teksti,
      * bet gan tavi specifiskie PHP Enums.
      */
     protected $casts = [
@@ -49,6 +50,6 @@ class Project extends Model
 
     public function documents(): HasMany
     {
-     return $this->hasMany(Document::class);
+        return $this->hasMany(Document::class);
     }
 }

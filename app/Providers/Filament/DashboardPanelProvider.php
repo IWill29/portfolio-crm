@@ -45,7 +45,9 @@ class DashboardPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                
+                \App\Filament\Widgets\RevenueChartWidget::class,
+                \App\Filament\Widgets\ProjectStatsWidget::class,
+                \App\Filament\Widgets\RecentActivityWidget::class,
             ])
             ->sidebarCollapsibleOnDesktop()
             ->darkMode(true)

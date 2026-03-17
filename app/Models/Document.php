@@ -8,16 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Models\Traits\LogsActivity;
 
 class Document extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\DocumentFactory> */
-    use HasFactory, SoftDeletes, InteractsWithMedia;
+    use HasFactory, SoftDeletes, InteractsWithMedia, LogsActivity;
 
     protected $fillable = [
         'project_id',
         'title',
-        'type', // piemēram: līgums, skice, rēķins
+        'type',
         'notes',
     ];
 
@@ -28,11 +29,7 @@ class Document extends Model implements HasMedia
     {
         return $this->belongsTo(Project::class);
     }
-
-    /**
-     * Šeit tu vari definēt specifiskas mediju kolekcijas (neobligāti, bet labi portfolio).
-     * Tas ļauj ierobežot failu skaitu vai veidus.
-     */
+    
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('attachments')
