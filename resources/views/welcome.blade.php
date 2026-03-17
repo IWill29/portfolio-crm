@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ config('app.name', 'CRM Port') }}</title>
+        <title>{{ config('app.name', 'SoloStream CRM') }}</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-slate-50 min-h-screen">
@@ -17,7 +17,7 @@
                         SoloStream CRM
                     </h1>
                     <p class="text-xl sm:text-2xl text-slate-600 dark:text-slate-300 font-light">
-                        Professional CRM for Modern Teams
+                        Professional CRM for Teams
                     </p>
                 </div>
 
