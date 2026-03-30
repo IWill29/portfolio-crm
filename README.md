@@ -1,87 +1,182 @@
-# CRM Port (Filament + Laravel)
+# CRM Port
 
-This repository is a Laravel + Filament CRM solution featuring:
-- Spatie Permissions (roles & permissions)
-- Spatie Activity Log (recent activity widget)
-- Filament UI + dashboards + widgets
-- Livewire reactive admin interface
+A portfolio CRM project built with Laravel and Filament.
+
+## Overview
+
+CRM Port is an admin-focused web application for managing business data through a modern Laravel stack.
+It includes role-based access control, activity tracking, and a clean Filament admin interface.
+
+## Main Features
+
+- Filament admin panel
+- Role and permission management (Spatie Permission)
+- Activity logging (Spatie Activitylog)
+- Livewire-powered admin interface
+- Pest test suite
+- Code formatting with Laravel Pint
+
+## Tech Stack
+
+- PHP 8.2+
+- Laravel 12
+- Filament 4
+- Livewire + Alpine.js
+- Tailwind CSS + Vite
+- MySQL 8
+- Pest 4
 
 ---
 
-## Technology Stack
+## Run With Docker
 
-- **Backend:** Laravel 12.0, Filament 4.0, PHP 8.2+
-- **Frontend:** Livewire, Alpine.js, Tailwind CSS 4.0, Vite 7.0
-- **Database:** MySQL/PostgreSQL with migrations
-- **Testing:** Pest 4.4
-- **Package Management:** Composer
-- **Packages:** Spatie Permission, Activity Log, Media Library
+This project is intended to be run with Docker.
 
-## Project Structure
+### Requirements
 
-```
-my-port-app/
-├── app/
-│   ├── Enums/                 # Type-safe enums (Project statuses, priorities)
-│   ├── Filament/              # Admin panel resources & widgets
-│   ├── Models/                # Eloquent ORM models (User, Client, Project)
-│   ├── Policies/              # Authorization rules (RBAC)
-│   └── Traits/                # LogsActivity trait (activity tracking)
-├── database/
-│   ├── migrations/            # Database schema definitions
-│   └── seeders/               # Initial data & test users
-├── resources/views/           # Public website pages
-├── tests/                      # Pest test suite
-├── .env.example               # Environment variables template
-└── composer.json              # PHP dependencies
-```
+- Docker Desktop (or Docker Engine + Docker Compose)
 
-### Key Directories
+### 1) Clone repository
 
-| Directory | Purpose |
-|-----------|---------|
-| **`app/Enums/`** | Type-safe enums (project statuses, priorities) |
-| **`app/Filament/`** | Admin panel resources and widgets |
-| **`app/Models/`** | Eloquent models with relationships |
-| **`app/Policies/`** | Authorization rules (admin/manager/user) |
-| **`app/Traits/`** | LogsActivity - automatic activity tracking |
-| **`database/migrations/`** | Database schema |
-| **`database/seeders/`** | Initial data and test accounts |
-| **`resources/views/`** | Public pages (homepage) |
-| **`tests/`** | Pest test suite |
-
-## Getting Started (Local)
-
-### 1) Clone
 ```bash
 git clone <repo-url>
 cd my-port-app
 ```
 
-### 2) Install dependencies
+### 2) Configure environment
+
+Create `.env` if it does not exist:
+
 ```bash
-composer install
 cp .env.example .env
-php artisan key:generate
 ```
 
-### 3) Database setup
-```bash
-php artisan migrate --seed
+Set (or verify) these database values in `.env`:
+
+```env
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=crm_port
+DB_USERNAME=crm_user
+DB_PASSWORD=secret
 ```
 
-### 4) Run server
+### 3) Build and start containers
+
 ```bash
-php artisan serve
+docker compose up --build -d
+```
+
+### 4) Open the app
+
+- App: [http://localhost:8000](http://localhost:8000)
+- Admin panel: [http://localhost:8000/admin](http://localhost:8000/admin)
+
+---
+
+## Test Accounts
+
+After running `migrate --seed`:
+
+| Role    | Email               | Password |
+|---------|---------------------|----------|
+| Admin   | admin@example.com   | password |
+| Manager | manager@example.com | password |
+
+---
+
+## Useful Docker Commands
+
+```bash
+# Stop containers
+docker compose down
+
+# Stop and remove volumes (full DB reset)
+docker compose down -v
+
+# View logs
+docker compose logs -f app
+docker compose logs -f db
+
+# Run Artisan commands inside app container
+docker compose exec app php artisan migrate --seed
+docker compose exec app php artisan test
+docker compose exec app php artisan about
 ```
 
 ---
 
-## Test Login Credentials
+## Testing
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@example.com | password |
-| Manager | manager@example.com | password |
+Run test suite inside Docker:
 
-Login at: `http://localhost:8000/admin`
+```bash
+docker compose exec app php artisan test
+```
+
+---
+
+## Code Style
+
+Run Pint inside Docker:
+
+```bash
+docker compose exec app ./vendor/bin/pint
+```
+
+Check-only mode (no changes):
+
+```bash
+docker compose exec app ./vendor/bin/pint --test
+```
+
+---
+
+## Common Troubleshooting
+
+### App does not open on `localhost:8000`
+
+- Check container status:
+  ```bash
+  docker compose ps
+  ```
+- Check app logs:
+  ```bash
+  docker compose logs -f app
+  ```
+
+### Database connection error
+
+- Verify `.env` uses `DB_HOST=db` in Docker mode.
+- Ensure DB container is running:
+  ```bash
+  docker compose logs -f db
+  ```
+
+### Missing app key error
+
+Generate key inside container:
+
+```bash
+docker compose exec app php artisan key:generate
+```
+
+---
+
+## Project Structure (Short)
+
+```text
+my-port-app/
+├── app/
+├── database/
+├── resources/
+├── routes/
+├── tests/
+├── Dockerfile
+├── docker-compose.yml
+├── composer.json
+└── README.md
+```
