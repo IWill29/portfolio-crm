@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ProjectPriority;
 use App\Enums\ProjectStatus;
 use App\Models\Traits\LogsActivity;
+use Database\Factories\ProjectFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +14,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProjectFactory> */
-    use HasFactory, SoftDeletes, LogsActivity;
+    /** @use HasFactory<ProjectFactory> */
+    use HasFactory, LogsActivity, SoftDeletes;
 
     protected $fillable = [
         'client_id',

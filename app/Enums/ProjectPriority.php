@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum ProjectPriority: string implements HasLabel, HasColor
+enum ProjectPriority: string implements HasColor, HasLabel
 {
     case Low = 'low';
     case Medium = 'medium';
@@ -28,7 +28,7 @@ enum ProjectPriority: string implements HasLabel, HasColor
     /**
      * Krāsa vizuālam brīdinājumam Filament tabulās.
      */
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
         return match ($this) {
             self::Low => 'gray',

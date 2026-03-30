@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Client;
 use Illuminate\Database\Seeder;
 
 class ClientSeeder extends Seeder
@@ -12,8 +12,7 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
-       // Izveidojam 20 reālistiskus klientus, izmantojot factory
-       \App\Models\Client::factory()->count(20)->create();
+        // Izveidojam 20 reālistiskus klientus, izmantojot factory
+        Client::factory()->count(20)->create();
     }
-
 }

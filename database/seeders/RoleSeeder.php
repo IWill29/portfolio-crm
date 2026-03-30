@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         // 1. Resetējam kešatmiņu (Spatie Permission labā prakse)
-        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // 2. Izveidojam specifiskas atļaujas (Permissions)
         // Šīs mēs izmantosim vēlāk Policies failos
@@ -35,7 +36,7 @@ class RoleSeeder extends Seeder
 
         // 4. Piešķiram atļaujas lomām
         $admin->givePermissionTo(Permission::all()); // Admins drīkst visu
-        
+
         $manager->givePermissionTo([
             'access crm',
         ]);

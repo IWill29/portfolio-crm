@@ -20,7 +20,7 @@ trait LogsActivity
                 'name',
                 'status',
                 'budget',
-                'notes',    
+                'notes',
                 'company',
             ]);
     }

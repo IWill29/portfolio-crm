@@ -26,7 +26,7 @@ class RevenueChartWidget extends ChartWidget
             $month => Project::query()
                 ->whereYear('created_at', Carbon::parse($month)->year)
                 ->whereMonth('created_at', Carbon::parse($month)->month)
-                ->sum('budget')
+                ->sum('budget'),
         ]);
 
         return [

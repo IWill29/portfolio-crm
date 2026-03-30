@@ -4,13 +4,14 @@ namespace App\Filament\Resources\Documents\Pages;
 
 use App\Filament\Resources\Documents\DocumentResource;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class CreateDocument extends CreateRecord
 {
     protected static string $resource = DocumentResource::class;
 
-    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
+    protected function handleRecordCreation(array $data): Model
     {
         $attachment = $data['attachment'] ?? null;
 

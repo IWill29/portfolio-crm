@@ -4,27 +4,27 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
 use App\Models\Client;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema; 
-use Filament\Schemas\Components\Section; 
-use Filament\Forms\Components\TextInput;
+use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn; 
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use BackedEnum;
 
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
-    
+
     protected static ?string $navigationLabel = 'Clients';
 
     /**

@@ -5,18 +5,19 @@ use App\Models\Client;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Filament\Actions\DeleteAction;
-use function Pest\Livewire\livewire;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use function Pest\Livewire\livewire;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->seed(RoleSeeder::class);
-    
+
     // Izveidojam Admin lietotāju, jo tikai viņš drīkst redzēt CRM
     $this->admin = User::factory()->create();
     $this->admin->assignRole('admin');
-    
+
     $this->actingAs($this->admin);
 });
 

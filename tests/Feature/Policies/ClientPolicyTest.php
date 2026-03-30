@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Client;
+use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

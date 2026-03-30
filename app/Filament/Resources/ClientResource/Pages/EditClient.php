@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\ClientResource\Pages;
 
-
 use App\Filament\Resources\ClientResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;

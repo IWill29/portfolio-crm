@@ -4,30 +4,29 @@ namespace App\Filament\Resources;
 
 use App\Enums\ProjectPriority;
 use App\Enums\ProjectStatus;
+use App\Filament\Resources\ProjectResource\Pages;
 use App\Models\Project;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use App\Filament\Resources\ProjectResource\Pages; 
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\TextInput;
+use BackedEnum;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Gate;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Actions\EditAction;
-use Filament\Actions\DeleteAction;
-use Illuminate\Support\Facades\Auth;
-use BackedEnum;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-briefcase';
-    
+
     protected static ?string $navigationLabel = 'Projekti';
 
     public static function form(Schema $schema): Schema
@@ -75,7 +74,7 @@ class ProjectResource extends Resource
                             ->label('Budžets')
                             ->numeric()
                             ->prefix('€')
-                            ->visible(fn () => Gate::allows('view financial data'))
+                            ->visible(fn () => Gate::allows('view financial data')),
                     ])->columns(2),
             ]);
     }

@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Traits\LogsActivity;
+use Database\Factories\ClientFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model
 {
-    /** @use HasFactory<\Database\Factories\ClientFactory> */
-    use HasFactory, SoftDeletes, LogsActivity;
+    /** @use HasFactory<ClientFactory> */
+    use HasFactory, LogsActivity, SoftDeletes;
 
     /**
      * Drošības slānis: definējam laukus, kurus atļauts aizpildīt masveidā.

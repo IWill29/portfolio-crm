@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filament\Resources\Documents\Pages;
 
 use App\Filament\Resources\Documents\DocumentResource;
@@ -6,7 +7,6 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\RestoreAction;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Database\Eloquent\Model;
 
 class EditDocument extends EditRecord
 {

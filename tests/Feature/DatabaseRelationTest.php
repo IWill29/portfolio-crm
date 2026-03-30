@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Client;
-use App\Models\Project;
 use App\Models\Document;
+use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -14,17 +14,17 @@ test('full database chain works correctly', function () {
     // 2. Izveidojam projektu šim klientam
     $project = Project::factory()->create([
         'client_id' => $client->id,
-        'title' => 'Testa Projekts'
+        'title' => 'Testa Projekts',
     ]);
 
     // 3. Izveidojam dokumentu šim projektam
     $document = Document::factory()->create([
         'project_id' => $project->id,
-        'title' => 'Testa Līgums'
+        'title' => 'Testa Līgums',
     ]);
 
     // PĀRBAUDES (Assertions)
-    
+
     // Vai klients redz savu projektu?
     expect($client->projects)->toHaveCount(1)
         ->and($client->projects->first()->title)->toBe('Testa Projekts');
@@ -39,7 +39,7 @@ test('full database chain works correctly', function () {
 
 test('cascade delete works for client projects', function () {
     $client = Client::factory()->has(Project::factory()->count(3))->create();
-    
+
     expect(Project::count())->toBe(3);
 
     // Dzēšam klientu

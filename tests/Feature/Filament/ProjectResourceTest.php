@@ -6,8 +6,9 @@ use App\Models\Project;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Filament\Actions\DeleteAction;
-use function Pest\Livewire\livewire;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use function Pest\Livewire\livewire;
 
 uses(RefreshDatabase::class);
 

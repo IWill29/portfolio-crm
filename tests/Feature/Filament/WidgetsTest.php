@@ -1,22 +1,24 @@
 <?php
 
+use App\Enums\ProjectStatus;
 use App\Filament\Widgets\ProjectStatsWidget;
 use App\Filament\Widgets\RecentActivityWidget;
 use App\Filament\Widgets\RevenueChartWidget;
+use App\Models\Client;
+use App\Models\Document;
 use App\Models\Project;
 use App\Models\User;
-use Database\Seeders\RoleSeeder;
-use function Pest\Livewire\livewire;
-use App\Models\Client;
 use Carbon\Carbon;
-use App\Enums\ProjectStatus;
-use Spatie\Activitylog\Models\Activity;
-use Illuminate\Support\Str;
+use Database\Seeders\RoleSeeder;
 use Filament\Facades\Filament;
-use App\Models\Document;
+use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Activity;
+use Tests\TestCase;
+
+use function Pest\Livewire\livewire;
 
 beforeEach(function () {
-    /** @var \Tests\TestCase $this */
+    /** @var TestCase $this */
     $this->seed(RoleSeeder::class);
 
     $admin = User::factory()->create();
@@ -177,12 +179,12 @@ test('recent activity widget shows latest activity with livewire', function () {
 });
 
 dataset('discoveredFilamentWidgets', function () {
-    $widgetsDirectory = realpath(__DIR__ . '/../../../app/Filament/Widgets');
+    $widgetsDirectory = realpath(__DIR__.'/../../../app/Filament/Widgets');
 
-    $files = glob($widgetsDirectory . '/*.php');
+    $files = glob($widgetsDirectory.'/*.php');
 
     return collect($files)
-        ->map(fn ($path) => 'App\\Filament\\Widgets\\' . Str::studly(basename($path, '.php')))
+        ->map(fn ($path) => 'App\\Filament\\Widgets\\'.Str::studly(basename($path, '.php')))
         ->filter(fn ($class) => class_exists($class))
         ->all();
 });

@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Documents\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class DocumentForm
@@ -24,7 +24,7 @@ class DocumentForm
                     ->disk('public')
                     ->directory('tmp/documents')
                     ->preserveFilenames()
-                    ->maxSize(10240) 
+                    ->maxSize(10240)
                     ->columnSpanFull(),
                 Textarea::make('notes')
                     ->columnSpanFull(),

@@ -3,8 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Project;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class ProjectStatsWidget extends StatsOverviewWidget
 {
@@ -15,8 +15,8 @@ class ProjectStatsWidget extends StatsOverviewWidget
         return [
             Stat::make('Visi projekti', Project::count()),
             Stat::make('Aktīvie projekti', Project::where('status', 'in_progress')->count()),
-            Stat::make('Kopējais budžets', '€' . number_format(Project::sum('budget'), 2, ',', ' ')),
-            Stat::make('Vidējais budžets', '€' . number_format(Project::avg('budget') ?? 0, 2, ',', ' ')),
+            Stat::make('Kopējais budžets', '€'.number_format(Project::sum('budget'), 2, ',', ' ')),
+            Stat::make('Vidējais budžets', '€'.number_format(Project::avg('budget') ?? 0, 2, ',', ' ')),
         ];
     }
 }

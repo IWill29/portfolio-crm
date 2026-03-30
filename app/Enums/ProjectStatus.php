@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum ProjectStatus: string implements HasLabel, HasColor
+enum ProjectStatus: string implements HasColor, HasLabel
 {
     case Idea = 'idea';
     case InProgress = 'in_progress';
@@ -30,7 +30,7 @@ enum ProjectStatus: string implements HasLabel, HasColor
     /**
      * Krāsa Filament nozīmītēm (Badge).
      */
-    public function getColor(): string | array | null
+    public function getColor(): string|array|null
     {
         return match ($this) {
             self::Idea => 'gray',
