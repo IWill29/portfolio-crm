@@ -4,36 +4,58 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: crm_port_app
-    ports:
-      - "8000:8000"
     volumes:
-      - ./:/var/www/html
-    depends_on:
-      - db
+      - ./.env:/var/www/html/.env
+      - ./public/build:/var/www/html/public/build:ro
+      - sqlite_data:/var/lib/sqlite
     environment:
       APP_ENV: local
       APP_DEBUG: "true"
       APP_URL: http://localhost:8000
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: crm_port
-      DB_USERNAME: crm_user
-      DB_PASSWORD: secret
+      AUTO_REMOVE_HOT: "1"
+      AUTO_MIGRATE: "0"
+      AUTO_SEED: "0"
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/lib/sqlite/database.sqlite
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /var/www/html/.env && php -v >/dev/null 2>&1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    expose:
+      - "9000"
 
-  db:
-    image: mysql:8.0
-    container_name: crm_port_db
-    restart: unless-stopped
+  web:
+    image: nginx:1.27-alpine
+    container_name: crm_port_web
     ports:
-      - "3307:3306"
-    environment:
-      MYSQL_DATABASE: crm_port
-      MYSQL_USER: crm_user
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: rootsecret
+      - "8000:80"
     volumes:
-      - db_data:/var/lib/mysql
+      - ./:/var/www/html:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      app:
+        condition: service_healthy
+
+  vite:
+    image: node:22-bookworm-slim
+    container_name: crm_port_vite
+    profiles: ["dev"]
+    working_dir: /var/www/html
+    command: sh -c "if [ ! -d node_modules ] || [ -z \"$(ls -A node_modules 2>/dev/null)\" ]; then npm ci --no-audit --no-fund; fi; npm run dev"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/var/www/html
+      - vite_node_modules:/var/www/html/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "1000"
+    depends_on:
+      web:
+        condition: service_started
 
 volumes:
-  db_data:
+  vite_node_modules:
+  sqlite_data:

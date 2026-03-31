@@ -23,7 +23,7 @@ It includes role-based access control, activity tracking, and a clean Filament a
 - Filament 4
 - Livewire + Alpine.js
 - Tailwind CSS + Vite
-- MySQL 8
+- SQLite
 - Pest 4
 
 ---
@@ -56,12 +56,8 @@ Set (or verify) these database values in `.env`:
 ```env
 APP_URL=http://localhost:8000
 
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=crm_port
-DB_USERNAME=crm_user
-DB_PASSWORD=secret
+DB_CONNECTION=sqlite
+DB_DATABASE=/var/lib/sqlite/database.sqlite
 ```
 
 ### 3) Build and start containers
@@ -70,10 +66,50 @@ DB_PASSWORD=secret
 docker compose up --build -d
 ```
 
+### 3.1) Optional: auto-reload frontend changes (recommended for development)
+
+Start Vite watcher container:
+
+```bash
+docker compose --profile dev up -d vite
+```
+
+When `vite` is running, changes in `resources/css`, `resources/js`, and Blade templates reload automatically.
+Open app at [http://localhost:8000](http://localhost:8000).
+
 ### 4) Open the app
 
 - App: [http://localhost:8000](http://localhost:8000)
 - Admin panel: [http://localhost:8000/admin](http://localhost:8000/admin)
+
+### Daily Use (Copy/Paste)
+
+```bash
+# Start project (normal day)
+docker compose up -d
+
+# Open logs when needed
+docker compose logs -f app
+docker compose logs -f web
+
+# Backend changed (PHP/Laravel/routes/config/composer)
+docker compose up -d --build app web
+
+# Frontend live mode ON (auto-reload)
+docker compose --profile dev up -d vite
+docker compose logs -f vite
+
+# Frontend live mode OFF (save CPU)
+docker compose stop vite
+
+# Artisan commands
+docker compose exec app php artisan migrate
+docker compose exec app php artisan optimize:clear
+
+# Full reset (only if really needed)
+docker compose down
+docker compose up -d --build
+```
 
 ---
 
@@ -99,12 +135,20 @@ docker compose down -v
 
 # View logs
 docker compose logs -f app
-docker compose logs -f db
+docker compose logs -f web
+docker compose logs -f vite
 
 # Run Artisan commands inside app container
 docker compose exec app php artisan migrate --seed
 docker compose exec app php artisan test
 docker compose exec app php artisan about
+
+# Rebuild backend services after PHP/backend changes
+docker compose up -d --build app web
+
+# Start/stop Vite live reload when needed
+docker compose --profile dev up -d vite
+docker compose stop vite
 ```
 
 ---
@@ -150,10 +194,10 @@ docker compose exec app ./vendor/bin/pint --test
 
 ### Database connection error
 
-- Verify `.env` uses `DB_HOST=db` in Docker mode.
-- Ensure DB container is running:
-  ```bash
-  docker compose logs -f db
+- Verify `.env` uses SQLite:
+  ```env
+  DB_CONNECTION=sqlite
+  DB_DATABASE=/var/lib/sqlite/database.sqlite
   ```
 
 ### Missing app key error
