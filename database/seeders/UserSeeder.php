@@ -13,23 +13,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Izveidojam Galveno Adminu (Tevis pašam)
-        $admin = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@solostream.lv',
-            'password' => Hash::make('password123'), // Vienmēr šifrējam paroli!
-        ]);
+        $admin = User::query()->updateOrCreate(
+            ['email' => 'admin@solostream.lv'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password123'),
+            ]
+        );
 
-        // Piešķiram lomu (izmantojot Spatie HasRoles trait)
-        $admin->assignRole('admin');
+        $admin->syncRoles(['admin']);
 
-        // 2. Izveidojam testa Menedžeri (portfolio demonstrācijai)
-        $manager = User::create([
-            'name' => 'Menedžeris Māris',
-            'email' => 'maris@solostream.lv',
-            'password' => Hash::make('password123'),
-        ]);
+        $manager = User::query()->updateOrCreate(
+            ['email' => 'maris@solostream.lv'],
+            [
+                'name' => 'Menedžeris Māris',
+                'password' => Hash::make('password123'),
+            ]
+        );
 
-        $manager->assignRole('manager');
+        $manager->syncRoles(['manager']);
     }
 }
