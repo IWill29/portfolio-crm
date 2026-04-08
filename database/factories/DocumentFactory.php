@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Document;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,10 +18,13 @@ class DocumentFactory extends Factory
      */
     public function definition(): array
     {
+        static $faker = null;
+        $faker ??= FakerFactory::create();
+
         return [
-            'title' => $this->faker->randomElement(['Gala līgums', 'Tehniskā specifikācija', 'Rēķins #'.rand(100, 999), 'Dizaina skice']),
-            'type' => $this->faker->randomElement(['Līgums', 'Rēķins', 'Specifikācija', 'Citi']),
-            'notes' => $this->faker->sentence(),
+            'title' => $faker->randomElement(['Gala līgums', 'Tehniskā specifikācija', 'Rēķins #'.rand(100, 999), 'Dizaina skice']),
+            'type' => $faker->randomElement(['Līgums', 'Rēķins', 'Specifikācija', 'Citi']),
+            'notes' => $faker->sentence(),
         ];
     }
 }

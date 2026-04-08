@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\ProjectPriority;
 use App\Enums\ProjectStatus;
 use App\Models\Project;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,14 +20,17 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
+        static $faker = null;
+        $faker ??= FakerFactory::create();
+
         return [
-            'title' => $this->faker->sentence(3),
-            'description' => $this->faker->paragraph(),
-            'budget' => $this->faker->randomFloat(2, 500, 15000), // Budžets no 500 līdz 15k
-            'status' => $this->faker->randomElement(ProjectStatus::cases()), // Paņem nejaušu Enum vērtību
-            'priority' => $this->faker->randomElement(ProjectPriority::cases()), // Paņem nejaušu Enum vērtību
-            'starts_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'ends_at' => $this->faker->dateTimeBetween('now', '+6 months'),
+            'title' => $faker->sentence(3),
+            'description' => $faker->paragraph(),
+            'budget' => $faker->randomFloat(2, 500, 15000), // Budžets no 500 līdz 15k
+            'status' => $faker->randomElement(ProjectStatus::cases()), // Paņem nejaušu Enum vērtību
+            'priority' => $faker->randomElement(ProjectPriority::cases()), // Paņem nejaušu Enum vērtību
+            'starts_at' => $faker->dateTimeBetween('-1 month', 'now'),
+            'ends_at' => $faker->dateTimeBetween('now', '+6 months'),
         ];
     }
 }

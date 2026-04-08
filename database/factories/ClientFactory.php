@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Client;
+use Faker\Factory as FakerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,13 +18,16 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
+        static $faker = null;
+        $faker ??= FakerFactory::create();
+
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->phoneNumber(),
-            'company' => $this->faker->company(),
-            'notes' => $this->faker->paragraph(),
-            'status' => $this->faker->randomElement(['active', 'inactive', 'lead']),
+            'name' => $faker->name(),
+            'email' => $faker->unique()->safeEmail(),
+            'phone' => $faker->phoneNumber(),
+            'company' => $faker->company(),
+            'notes' => $faker->paragraph(),
+            'status' => $faker->randomElement(['active', 'inactive', 'lead']),
         ];
     }
 }
