@@ -18,9 +18,9 @@ class DocumentFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->randomElement(['Gala līgums', 'Tehniskā specifikācija', 'Rēķins #'.rand(100, 999), 'Dizaina skice']),
-            'type' => fake()->randomElement(['Līgums', 'Rēķins', 'Specifikācija', 'Citi']),
-            'notes' => fake()->sentence(),
+            'title' => $this->faker->randomElement(['Gala līgums', 'Tehniskā specifikācija', 'Rēķins #'.rand(100, 999), 'Dizaina skice']),
+            'type' => $this->faker->randomElement(['Līgums', 'Rēķins', 'Specifikācija', 'Citi']),
+            'notes' => $this->faker->sentence(),
         ];
     }
 }

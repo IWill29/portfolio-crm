@@ -20,13 +20,13 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(3),
-            'description' => fake()->paragraph(),
-            'budget' => fake()->randomFloat(2, 500, 15000), // Budžets no 500 līdz 15k
-            'status' => fake()->randomElement(ProjectStatus::cases()), // Paņem nejaušu Enum vērtību
-            'priority' => fake()->randomElement(ProjectPriority::cases()), // Paņem nejaušu Enum vērtību
-            'starts_at' => fake()->dateTimeBetween('-1 month', 'now'),
-            'ends_at' => fake()->dateTimeBetween('now', '+6 months'),
+            'title' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(),
+            'budget' => $this->faker->randomFloat(2, 500, 15000), // Budžets no 500 līdz 15k
+            'status' => $this->faker->randomElement(ProjectStatus::cases()), // Paņem nejaušu Enum vērtību
+            'priority' => $this->faker->randomElement(ProjectPriority::cases()), // Paņem nejaušu Enum vērtību
+            'starts_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
+            'ends_at' => $this->faker->dateTimeBetween('now', '+6 months'),
         ];
     }
 }
